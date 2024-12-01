@@ -15,6 +15,7 @@ set mouse=n
 set mousemodel=""
 
 call plug#begin()
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'navarasu/onedark.nvim'
     Plug 'tikhomirov/vim-glsl'
     Plug 'neovim/nvim-lspconfig'
@@ -146,6 +147,15 @@ lua <<EOF
     lspconfig.zls.setup {
 	capabilities = capabilities
     }
+    lspconfig.ols.setup {
+	capabilities = capabilities,
+	enable_hover = true,
+	enable_snippets = true,
+	enable_semantic_tokens = true,
+	enable_document_symbols = true,
+	enable_inlay_hints = true,
+	verbose = true,
+    }
     lspconfig.glsl_analyzer.setup {
 	capabilities = capabilities
     }
@@ -156,7 +166,10 @@ lua <<EOF
     vim.diagnostic.config({
 	update_in_insert = true,
 	severity_sort = true,
-	virtual_text = false,
+	virtual_text = {
+	    hl_eol = true,
+	    virt_text_repeat_linebreak = true,
+	},
 	signs = {
 	    numhl = {
 		[vim.diagnostic.severity.ERROR] = 'ErrGroup',
@@ -165,26 +178,8 @@ lua <<EOF
 		[vim.diagnostic.severity.HINT] = 'Directory',
 	    },
 	},
-	float = {
-	    scope = 'line',
-	    header = false,
-	    source = true,
-	},
     })
 
-    vim.o.updatetime = 100
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-	group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-	callback = function ()
-	    local pos = vim.api.nvim_win_get_cursor(0)
-	    opt = {
-		focus = false,
-		anchor_bias = 'below',
-		zindex = 1,
-	    }
-	    vim.diagnostic.open_float(nil, opt)
-	end
-    })
     vim.api.nvim_create_autocmd({'BufWritePre'}, {
 	pattern = "*.zig",
 	callback = function()
