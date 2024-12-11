@@ -16,6 +16,8 @@ set mousemodel=""
 
 call plug#begin()
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
     Plug 'navarasu/onedark.nvim'
     Plug 'tikhomirov/vim-glsl'
     Plug 'neovim/nvim-lspconfig'
@@ -34,12 +36,18 @@ let g:onedark_config = {
 colorscheme onedark
 set colorcolumn=100
 au BufRead,BufNewFile *.h set filetype=c
+au BufRead,BufNewFile *.slang set filetype=slang
 let g:c_syntax_for_h = 1
 let g:rustfmt_autosave = 1
 let g:zig_fmt_autosave = 0
 hi ErrGroup guibg=Red
 
 lua <<EOF
+    local telescope = require('telescope.builtin')
+    vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Telescope find files' })
+    vim.keymap.set('n', '<leader>fg', telescope.live_grep, { desc = 'Telescope live grep' })
+    vim.keymap.set('n', '<leader>fb', telescope.buffers, { desc = 'Telescope buffers' })
+    vim.keymap.set('n', '<leader>fh', telescope.help_tags, { desc = 'Telescope help tags' })
     local cmp = require('cmp')
     local types = require('cmp.types')
 
@@ -162,6 +170,18 @@ lua <<EOF
     lspconfig.cmake.setup {
 	capabilities = capabilities
     }
+    lspconfig.slangd.setup {
+	capabilities = capabilities,
+	filetypes = {"hlsl", "slang"},
+	settings = {
+	    slang = {
+    		inlayHints = {
+		    deducedTypes = true,
+		    parameterNames = true,
+		}
+	    }
+       	}
+    }
 
     vim.diagnostic.config({
 	update_in_insert = true,
@@ -181,7 +201,6 @@ lua <<EOF
     })
 
     vim.api.nvim_create_autocmd({'BufWritePre'}, {
-	pattern = "*.zig",
 	callback = function()
 	    vim.lsp.buf.format()
 	end,
