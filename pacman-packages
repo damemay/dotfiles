@@ -21,3 +21,6 @@ the_silver_searcher
 thunar
 ttf-font-awesome
 ttf-noto-nerd
+xorg
+xorg-xinit
+base-devel
