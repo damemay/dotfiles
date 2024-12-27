@@ -7,6 +7,7 @@ REPO_DIR=$(dirname -- "$(readlink -f -- "$0")")
 pacman -S - < $REPO_DIR/pacman_packages
 
 sudo ln -sf $REPO_DIR/xorg-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
+sudo ln -sf $REPO_DIR/xorg-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
 ln -sf $REPO_DIR/.xinitrc $HOME/.xinitrc
 ln -sf $REPO_DIR/.bash_profile $HOME/
 ln -sf $REPO_DIR/.bashrc $HOME/
