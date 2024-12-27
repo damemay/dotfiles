@@ -24,3 +24,5 @@ ttf-noto-nerd
 xorg
 xorg-xinit
 base-devel
+brightnessctl
+ttf-cascadia-code
