@@ -152,35 +152,11 @@ lua <<EOF
 	    "-header-insertion=never",
 	}
     }
-    lspconfig.zls.setup {
-	capabilities = capabilities
-    }
-    lspconfig.ols.setup {
-	capabilities = capabilities,
-	enable_hover = true,
-	enable_snippets = true,
-	enable_semantic_tokens = true,
-	enable_document_symbols = true,
-	enable_inlay_hints = true,
-	verbose = true,
-    }
     lspconfig.glsl_analyzer.setup {
 	capabilities = capabilities
     }
     lspconfig.cmake.setup {
 	capabilities = capabilities
-    }
-    lspconfig.slangd.setup {
-	capabilities = capabilities,
-	filetypes = {"hlsl", "slang"},
-	settings = {
-	    slang = {
-    		inlayHints = {
-		    deducedTypes = true,
-		    parameterNames = true,
-		}
-	    }
-       	}
     }
 
     vim.diagnostic.config({
