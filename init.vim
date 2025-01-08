@@ -27,6 +27,7 @@ call plug#begin()
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'rust-lang/rust.vim'
+    Plug 'ziglang/zig.vim'
 call plug#end()
 
 let g:onedark_config = {
@@ -157,6 +158,15 @@ lua <<EOF
     }
     lspconfig.cmake.setup {
 	capabilities = capabilities
+    }
+    lspconfig.zls.setup {
+	capabilities = capabilities,
+	settings = {
+	    zls = {
+		enable_build_on_save = true,
+		build_on_save_step = "check",
+	    }
+	}
     }
 
     vim.diagnostic.config({
