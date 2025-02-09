@@ -1,13 +1,14 @@
 #!/bin/bash
 # This script assumes Arch Linux with X11.
 # Make sure all submodules are cloned.
+# Run with sudo.
 
 REPO_DIR=$(dirname -- "$(readlink -f -- "$0")")
 
-pacman -S - < $REPO_DIR/pacman_packages
+pacman -S - < $REPO_DIR/pacman-packages
 
-sudo ln -sf $REPO_DIR/xorg-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
-sudo ln -sf $REPO_DIR/xorg-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
+ln -sf $REPO_DIR/xorg-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf
+ln -sf $REPO_DIR/xorg-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
 ln -sf $REPO_DIR/.xinitrc $HOME/.xinitrc
 ln -sf $REPO_DIR/.bash_profile $HOME/
 ln -sf $REPO_DIR/.bashrc $HOME/
@@ -20,4 +21,4 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 /usr/bin/nvim +PlugInstall +qa
 
 make -C $REPO_DIR/ble.sh install PREFIX=$HOME/.local
-sudo ln -s /usr/bin/nvim /usr/bin/vim
+ln -s /usr/bin/nvim /usr/bin/vim
