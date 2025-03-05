@@ -1,6 +1,5 @@
 set $mod Mod4
 font pango:monospace 8
-exec --no-startup-id picom -b
 exec --no-startup-id polybar -r
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
@@ -15,6 +14,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 5%-
+bindsym XF86KbdBrightnessUp exec --no-startup-id brightnessctl --device='smc::kbd_backlight' s +5%
+bindsym XF86KbdBrightnessDown exec --no-startup-id brightnessctl --device='smc::kbd_backlight' s 5%-
 
 bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
