@@ -12,7 +12,6 @@ set softtabstop=4
 set signcolumn=no
 set shell=/bin/bash
 set mouse=n
-set mousemodel=""
 
 call plug#begin()
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -116,14 +115,14 @@ lua <<EOF
 	formatting = {
 	    format = function(entry, item)
 		item.menu = ''
-        	local content = item.abbr
-        	local win_width = vim.api.nvim_win_get_width(0)
-        	local max_content_width = math.floor(win_width * 0.2)
-        	if #content > max_content_width then
-        	    item.abbr = vim.fn.strcharpart(content, 0, max_content_width - 3) .. "..."
-        	else
-        	    item.abbr = content .. (" "):rep(max_content_width - #content)
-        	end
+        	-- local content = item.abbr
+        	-- local win_width = vim.api.nvim_win_get_width(0)
+        	-- local max_content_width = math.floor(win_width * 0.2)
+        	-- if #content > max_content_width then
+        	--     item.abbr = vim.fn.strcharpart(content, 0, max_content_width - 3) .. "..."
+        	-- else
+        	--     item.abbr = content .. (" "):rep(max_content_width - #content)
+        	-- end
         	return item
 	    end,
 	}
@@ -156,9 +155,9 @@ lua <<EOF
     lspconfig.glsl_analyzer.setup {
 	capabilities = capabilities
     }
-    lspconfig.cmake.setup {
+    --[[ lspconfig.cmake.setup {
 	capabilities = capabilities
-    }
+    } ]]--
     lspconfig.zls.setup {
 	capabilities = capabilities,
 	settings = {
