@@ -27,11 +27,13 @@ call plug#begin()
     Plug 'hrsh7th/nvim-cmp'
     Plug 'rust-lang/rust.vim'
     Plug 'ziglang/zig.vim'
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 let g:onedark_config = {
   \ 'style': 'warmer',
   \ 'transparent': v:false,
+  \ 'colors': {'bg0':'#1E1E1E',},
 \}
 colorscheme onedark
 set colorcolumn=100
@@ -40,6 +42,17 @@ au BufRead,BufNewFile *.slang set filetype=slang
 let g:c_syntax_for_h = 1
 let g:rustfmt_autosave = 1
 let g:zig_fmt_autosave = 0
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
 hi ErrGroup guibg=Red
 
 lua <<EOF
@@ -152,6 +165,9 @@ lua <<EOF
 	    "-header-insertion=never",
 	}
     }
+    lspconfig.gopls.setup {
+	capabilities = capabilities
+    }
     lspconfig.glsl_analyzer.setup {
 	capabilities = capabilities
     }
@@ -190,4 +206,9 @@ lua <<EOF
 	    vim.lsp.buf.format()
 	end,
     })
+    vim.api.nvim_create_autocmd('VimLeave', {
+  callback = function()
+    vim.opt.guicursor = 'a:ver25'
+  end,
+})
 EOF
