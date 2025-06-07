@@ -27,3 +27,6 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 /usr/bin/nvim +PlugInstall +qa
 
 make -C $REPO_DIR/ble.sh install PREFIX=$HOME/.local
+
+chmod +x $REPO_DIR/cmake-new
+sudo cp $REPO_DIR/cmake-new /usr/local/bin/
